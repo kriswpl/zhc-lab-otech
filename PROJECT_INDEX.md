@@ -13,6 +13,18 @@ Nie jest current state, metodologią ZHC ani kopią shared architecture. Definiu
 - AI Mind `ROOT_FOLDER`: https://drive.google.com/drive/folders/1h9VuzJb8ounJrjIGMrhxrSCC9yRdHCix
 - Project read mirror root: https://drive.google.com/drive/folders/1h9VuzJb8ounJrjIGMrhxrSCC9yRdHCix
 
+### AI Mind shared runtime inheritance
+
+- `SHARED_RUNTIME_CONTRACT`: https://docs.google.com/document/d/1bdz0nM7PD97HvawgB--xOoeQCf8kzYCI_WXeDJa1TNA/edit
+- `SHARED_RUNTIME_SCOPE`: `5A. SHARED RUNTIME INVARIANTS`
+- `SHARED_RUNTIME_REV`: `read-live`
+
+Przed pracą wymagającą kontekstu projektu wykonaj bounded live read wyłącznie wskazanego `SHARED_RUNTIME_SCOPE` z `SHARED_RUNTIME_CONTRACT` i zastosuj go razem z tym lokalnym kontraktem.
+
+Nie odczytuj Global Registry ani pozostałych sekcji Global Runtime podczas zwykłej pracy lokalnej. Global Runtime jest tutaj używany wyłącznie jako shared invariant plane, nie jako router.
+
+Lokalny `PROJECT_INDEX.md` pozostaje canonical dla lokalnego source routing, source precedence i local overrides. W razie konfliktu jawny `LOCAL_OVERRIDES` ma pierwszeństwo nad shared invariant tylko w zakresie opisanego override; obecnie `LOCAL_OVERRIDES: none`.
+
 ZHC Lab OTECH dziedziczy wspólny kontrakt projektowy ZHC z **ZHC Product Base**.
 
 ### Shared ZHC Product Base — read plane

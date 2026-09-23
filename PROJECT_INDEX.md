@@ -1,17 +1,21 @@
 # Project Index
 
-Ten plik jest lokalnym routerem domeny `ZHC_LAB_OTECH`.
+Ten plik jest canonical lokalnym routerem projektu `ZHC_LAB_OTECH`.
 
-Nie jest current state, metodologią ZHC ani kopią shared architecture. Definiuje wyłącznie to, jak ZHC Lab OTECH instancjonuje wspólny kontrakt ZHC: gdzie AI czyta, gdzie zapisuje, który system jest authoritative dla danej klasy informacji oraz gdzie znajdują się lokalne pointery domeny.
+Nie jest metodologią ZHC ani kopią shared architecture. Definiuje lokalną instancję wspólnego kontraktu ZHC: gdzie AI czyta, gdzie zapisuje, który system jest authoritative dla danej klasy informacji oraz gdzie znajdują się lokalne pointery projektu.
+
+Od cutoveru 2026-09-23 projekt jest **Drive-native** dla project knowledge i project state. Notion oraz wcześniejsze projekcje GitHub/Drive nie są current source of truth.
+
+---
 
 ## 0. Identity i shared contract
 
 - `DOMAIN_KEY`: `ZHC_LAB_OTECH`
 - `TYPE`: `OPPORTUNITY_PORTFOLIO`
 - `STATE_MODE`: `PROJECT_MANAGED`
-- GitHub: `kriswpl/zhc-lab-otech`
 - AI Mind `ROOT_FOLDER`: https://drive.google.com/drive/folders/1h9VuzJb8ounJrjIGMrhxrSCC9yRdHCix
-- Project read mirror root: https://drive.google.com/drive/folders/1h9VuzJb8ounJrjIGMrhxrSCC9yRdHCix
+- Canonical `PROJECT_ROOT`: https://drive.google.com/drive/folders/1h9VuzJb8ounJrjIGMrhxrSCC9yRdHCix
+- GitHub code / execution repo: `kriswpl/zhc-lab-otech`
 
 ### AI Mind shared runtime inheritance
 
@@ -21,21 +25,21 @@ Nie jest current state, metodologią ZHC ani kopią shared architecture. Definiu
 
 Przed pracą wymagającą kontekstu projektu wykonaj bounded live read wyłącznie wskazanego `SHARED_RUNTIME_SCOPE` z `SHARED_RUNTIME_CONTRACT` i zastosuj go razem z tym lokalnym kontraktem.
 
-Nie odczytuj Global Registry ani pozostałych sekcji Global Runtime podczas zwykłej pracy lokalnej. Global Runtime jest tutaj używany wyłącznie jako shared invariant plane, nie jako router.
+Nie odczytuj Global Registry ani pozostałych sekcji Global Runtime podczas zwykłej pracy lokalnej. Lokalny `PROJECT_INDEX.md` pozostaje canonical dla source routing, source precedence i local overrides. Aktywne overrides są zdefiniowane w sekcji 10.
 
-Lokalny `PROJECT_INDEX.md` pozostaje canonical dla lokalnego source routing, source precedence i local overrides. W razie konfliktu jawny `LOCAL_OVERRIDES` ma pierwszeństwo nad shared invariant tylko w zakresie opisanego override; obecnie `LOCAL_OVERRIDES: none`.
+### Shared ZHC methodology / process / runtime read planes
 
-ZHC Lab OTECH dziedziczy wspólny kontrakt projektowy ZHC z **ZHC Product Base**.
-
-### Shared ZHC Product Base — read plane
-
-- FLAT: https://drive.google.com/drive/folders/1q9aveb064ov_jexj32Pn6DuhnUSMkH4Q
+- `PRODUCT_BASE_FLAT`: https://drive.google.com/drive/folders/1q9aveb064ov_jexj32Pn6DuhnUSMkH4Q
 - `_ROOT.md`: https://drive.google.com/file/d/1NRJFIpEWD741tPwBV1z4QVdN-aMp9zrO/view
+- `WORK_PACKET_MATRIX_V4_4`: https://docs.google.com/spreadsheets/d/15a7Esy9Ehkl-4qi1SkcHvUfiIXWFDBxPHg6oimNXwZs/edit
 - `ZHC OS Engineering.md`: https://drive.google.com/file/d/1eqVdmlNoMNd-TbDM5ZElVGi6JcsbSYsT/view
+- `ZHC_RUNTIME_RELEASE`: `zhc-runtime-v0.0.3-pp01e01.4`
+- `ZHC_RUNTIME_INDEX`: https://drive.google.com/file/d/16svi9QiFyzNrMO41ooV3iG-eYUv20vuf/view
+- `ZHC_RUNTIME_FLAT`: https://drive.google.com/drive/folders/1oFP2uvbC-pOYY7khdi6vzS7RPq8yXpBn
+- `ZHC_RUNTIME_SOURCE_COMMIT`: `2ba4e2f59b4a428e48f60d95e0d797451f4e2e19`
+- `ZHC_RUNTIME_SCOPE`: `PP-00-G01; PP-00-E03; PP-00-E01; PP-00-E02; PP-00-J01; PP-01-E01`
 
-Dla zasad source authority, read/write planes, projections, managed objects, sync lag, mutation rules i runtime adapters stosuj w `ZHC OS Engineering.md` sekcję **`Project Source / Access / Mutation Contract`**.
-
-`PROJECT_INDEX.md` nie powiela shared metodologii ani kontraktu. Poniżej definiuje ich lokalną instancję dla ZHC Lab OTECH.
+Dla WPT z `ZHC_RUNTIME_SCOPE` odczytaj `ZHC_RUNTIME_INDEX`, następnie wyłącznie odpowiadający `ZHC_RUNTIME_FLAT/<WPT_ID>.md`. Ten pojedynczy FLAT WPT jest kompletnym execution read unit. Nie rekonstruuj wykonania z Matrixu, Product Base, `zhc-os/main:/system` ani pamięci rozmów. `next_wpt` jest pointerem i nie uruchamia kolejnego WPT automatycznie.
 
 ---
 
@@ -43,221 +47,208 @@ Dla zasad source authority, read/write planes, projections, managed objects, syn
 
 | Information class | Normal read plane | Authoritative write owner | Local pointer |
 |---|---|---|---|
-| Lab durable knowledge | Drive `docs/` | Notion `ZHC Lab OTECH` | `docs/` |
-| Opportunity portfolio state: signals / opportunities / hypotheses / experiments / evidence / decisions / operational state | Drive `state/` | Notion `ZHC Lab OTECH` | `state/` |
-| Lab backlog / tasks / execution status | Linear | Linear | właściwy projekt/workspace ZHC Lab OTECH w Linear, gdy zostanie zainstancjonowany |
-| OTECH company governance / reporting / financing / operational state | domena `OTECH` | domena `OTECH` | handoff przez AI Mind Registry do `DOMAIN_KEY=OTECH` |
-| Repo-native config / workflows / sync scripts / source code | GitHub | GitHub | `kriswpl/zhc-lab-otech` |
-| `PROJECT_INDEX.md` | GitHub / Drive mirror | GitHub | repo root |
-| Shared ZHC operating knowledge | ZHC Product Base FLAT | ZHC source plane zgodny z jego własnym kontraktem | Product Base pointers z sekcji 0 |
+| Opportunity portfolio / runtime state | Drive — `10 - Project State/Project State` | Drive — `Project State` Google Sheet | https://docs.google.com/spreadsheets/d/1e_96uq9YsI72j5vNp_9hZUxdu0QGWOE0iW_YQK20Qso/edit |
+| Rich detail / human review pages linked from state | Drive Google Docs | Drive Google Docs | `detail_doc` w odpowiednim rekordzie |
+| Lab durable knowledge | Drive — `20 - Knowledge` | Drive | https://drive.google.com/drive/folders/1pXPr4Y_Zo0uoo94N2M7EChm3FiTsAwbC |
+| Research / brain dumps / source material | Drive — `30 - Research` | Drive | https://drive.google.com/drive/folders/1wOzSPgPOI4Ttnr6pT1xPXlSA5hTo5W06 |
+| Product / experiment artifacts | Drive — `40 - Artifacts` | Drive | https://drive.google.com/drive/folders/1Q_qSj2zElIzokcecu7oy_1_7EOgcU_89 |
+| Backlog / tasks / implementation status Labu | Linear | Linear | właściwy projekt/workspace ZHC Lab OTECH |
+| OTECH company governance / reporting / financing / operational state | domena `OTECH` | domena `OTECH` | handoff do `DOMAIN_KEY=OTECH` |
+| Source code / infra / workflows / repo-native config | GitHub | GitHub | `kriswpl/zhc-lab-otech` |
+| `PROJECT_INDEX.md` | Drive `PROJECT_ROOT` | Drive | https://drive.google.com/file/d/1k5VZp8tl3_gYvkQJjqQD9VuPd5XQ_yXL/view |
+| Historical / migration material | Drive — `90 - Archive` | Drive archive only | https://drive.google.com/drive/folders/1QimTbxxuWMk8GBuiOrDVbp2_WbBhgNjs |
+| Shared ZHC methodology / Knowledge | `PRODUCT_BASE_FLAT` | ZHC source plane zgodny z jego własnym kontraktem | Product Base pointers z sekcji 0 |
+| Shared ZHC runtime execution | `ZHC_RUNTIME_INDEX -> ZHC_RUNTIME_FLAT/<WPT_ID>.md` | ZHC runtime source; local writes według WPT + tego Indexu | runtime pointers z sekcji 0 |
 
-Każda klasa informacji ma jednego authoritative write ownera. Drive `docs/` i `state/` oraz ich odpowiedniki w GitHub są generowanymi projekcjami do odczytu/versioningu, nie alternatywnym semantic write masterem.
+Każda klasa informacji ma jednego authoritative write ownera.
 
----
-
-## 2. Opportunity portfolio ownership i handoff do OTECH
-
-ZHC Lab OTECH może utrzymywać wiele sygnałów i wiele Opportunities związanych z OTECH jednocześnie.
-
-Lab owns current state danego Opportunity dopóki temat pozostaje eksperymentem / Opportunity ZHC. Shared metoda ZHC rozróżnia intake `INSPIRATION / CANDIDATE` oraz decyzje portfelowe `NOW / REDESIGN / PARK / KILL`.
-
-Jeżeli Opportunity przechodzi do regularnej realizacji w istniejącej organizacji OTECH:
-
-- bieżący governance / operational / execution state przejmuje domena `OTECH`,
-- ZHC Lab OTECH zachowuje lineage: źródłowy signal, Opportunity, evidence, hipotezy, eksperymenty i decision trail,
-- ZHC Lab OTECH nie utrzymuje konkurencyjnego operational state OTECH.
-
-Jeżeli w wyniku pracy powstaje samodzielny produkt lub venture, stosujemy `SPIN_OUT`:
-
-- nowa domena `PROJECT_MANAGED` przejmuje current product/project state,
-- Lab zachowuje lineage i portfolio trail,
-- current state nowej domeny nie jest dalej utrzymywany w Labie.
+**Notion nie jest normal read plane ani write plane dla ZHC Lab OTECH.** Pozostaje wyłącznie historycznym migration source i nie jest fallbackiem do current state.
 
 ---
 
-## 3. Project read plane — Google Drive
+## 2. Canonical project root — Google Drive
 
-AI Mind `ROOT_FOLDER` i `SYNC_MANAGED` read mirror dla tej domeny:
-
+Canonical project root:
 https://drive.google.com/drive/folders/1h9VuzJb8ounJrjIGMrhxrSCC9yRdHCix
 
-Workflow publikuje tutaj wyłącznie:
+Minimalna struktura:
 
-- `PROJECT_INDEX.md`,
-- `docs/`,
-- `state/`.
+```text
+ZHC Lab OTECH/
+├── PROJECT_INDEX.md
+├── 10 - Project State/
+│   └── Project State [Google Sheet]
+├── 20 - Knowledge/
+│   └── Konstytucja Labu [Google Doc]
+├── 30 - Research/
+├── 40 - Artifacts/
+└── 90 - Archive/
+```
 
-### `docs/`
+Pointery:
 
-Generowane projekcje trwałej wiedzy Labu, obecnie:
-
-- `docs/lab-constitution.md`
-
-### `state/`
-
-Generowane projekcje current opportunity portfolio state:
-
-- `state/signals.csv`
-- `state/opportunities.csv`
-- `state/hypotheses.csv`
-- `state/experiments.csv`
-- `state/evidence.csv`
-- `state/decisions.csv`
-- `state/operational-state.md`
-
-Czytaj wyłącznie pliki potrzebne do bieżącego zadania. Nie rekonstruuj current state z pamięci rozmów, jeżeli dostępna jest aktualna projekcja.
-
-Folder Drive jest `SYNC_MANAGED`. Nie zapisuj w nim ręcznie trwałych plików project knowledge/state ani nie poprawiaj ręcznie projekcji wygenerowanych przez workflow.
-
----
-
-## 4. Project knowledge i opportunity portfolio state — Notion write plane
-
-Canonical writable upstream dla durable knowledge i opportunity portfolio state:
-
-- Workspace: `Nowe biznesy`
-- Project root: `ZHC Lab OTECH`
-- Project root ID: `3de66089-2751-80b0-832e-df92bc697eea`
-- URL: https://app.notion.com/p/3de66089275180b0832edf92bc697eea
-
-Managed objects pod rootem obejmują w szczególności:
-
-- `Konstytucja Labu`,
-- `Stan operacyjny`,
-- `Dane/Signals`,
-- `Dane/Opportunities`,
-- `Dane/Hipotezy`,
-- `Dane/Eksperymenty`,
-- `Dane/Evidence`,
-- `Dane/Decision Log`.
-
-Dla trwałej zmiany knowledge/state przejdź do właściwego istniejącego managed object i wykonaj bounded mutation. Nie używaj Notion podczas zwykłego odczytu, jeśli aktualna projekcja Drive wystarcza.
-
-Techniczne mapowanie managed Notion objects do projekcji utrzymuje `config/project.sources.yaml`. Stabilnych Notion IDs nie duplikujemy w tym Indexie poza rootem.
+| Obszar | Pointer |
+|---|---|
+| `PROJECT_INDEX.md` | https://drive.google.com/file/d/1k5VZp8tl3_gYvkQJjqQD9VuPd5XQ_yXL/view |
+| `10 - Project State` | https://drive.google.com/drive/folders/1NWLBNMqgdZOZtgOe7c-06KFWoK0V9Ds0 |
+| `Project State` | https://docs.google.com/spreadsheets/d/1e_96uq9YsI72j5vNp_9hZUxdu0QGWOE0iW_YQK20Qso/edit |
+| `20 - Knowledge` | https://drive.google.com/drive/folders/1pXPr4Y_Zo0uoo94N2M7EChm3FiTsAwbC |
+| `Konstytucja Labu` | https://docs.google.com/document/d/1yddhEJbd-W7QBy-bu2X7mFPEtT53CIuzZWpQoFKJLPQ/edit |
+| `30 - Research` | https://drive.google.com/drive/folders/1wOzSPgPOI4Ttnr6pT1xPXlSA5hTo5W06 |
+| `40 - Artifacts` | https://drive.google.com/drive/folders/1Q_qSj2zElIzokcecu7oy_1_7EOgcU_89 |
+| `90 - Archive` | https://drive.google.com/drive/folders/1QimTbxxuWMk8GBuiOrDVbp2_WbBhgNjs |
 
 ---
 
-## 5. Execution — Linear i handoff
+## 3. Structured project state — `10 - Project State/Project State`
 
-Authoritative owner dla backlogu, tasks, implementation work i execution status **Labu** jest Linear po zainstancjonowaniu właściwego projektu/workspace ZHC Lab OTECH.
+Canonical structured current state Labu jest Google Sheet `Project State`.
 
-Nie twórz równoległego backlogu w Notion, Drive, `state/` ani pamięci rozmowy. Notion może przechowywać metodologiczny/opportunity state i `next_decisive_action`, ale wykonywalne zadania i ich status należą do Linear.
+Aktywne zakładki:
+- `IDEAS_INBOX`
+- `SOURCES`
+- `SIGNAL`
+- `WORKFLOW_CASE`
+- `STAGED_OUTPUTS`
+- `GATE_RECORD`
+- `OPPORTUNITY_CARD`
+- `EVIDENCE_ITEM`
+- `DECISION_RECORD`
+
+State schema został zainicjalizowany z tego samego Drive-native wzorca co ZHC Lab Solo, bez kopiowania jego danych biznesowych.
+
+Rekord w Sheet przechowuje structured current state. Gdy obiekt wymaga dłuższego opisu, rationale, tabel lub narracji, może wskazać Google Doc przez `detail_doc`. `detail_doc` nie tworzy drugiego source of truth.
+
+---
+
+## 4. Project knowledge, research i artifacts
+
+### `20 - Knowledge`
+Canonical durable project knowledge. Aktualna `Konstytucja Labu`:
+https://docs.google.com/document/d/1yddhEJbd-W7QBy-bu2X7mFPEtT53CIuzZWpQoFKJLPQ/edit
+
+### `30 - Research`
+Brain dumpy, materiały źródłowe i durable research.
+
+### `40 - Artifacts`
+Trwałe artefakty eksperymentów, produktu i komunikacji.
+
+### `90 - Archive`
+Materiały historyczne, legacy mirrors i snapshoty migracyjne. Archive nie jest fallbackiem do current state.
+
+---
+
+## 5. Opportunity portfolio ownership i handoff do OTECH
+
+ZHC Lab OTECH może utrzymywać wiele sygnałów i Opportunities związanych z OTECH jednocześnie.
+
+Dopóki temat pozostaje Opportunity / eksperymentem ZHC, current opportunity state pozostaje w `ZHC_LAB_OTECH`.
+
+Gdy temat przechodzi do regularnej realizacji w OTECH, bieżący governance / operational / execution state przejmuje domena `OTECH`, a Lab zachowuje lineage, evidence i decision trail.
+
+Jeżeli powstaje samodzielny produkt lub venture, stosujemy `SPIN_OUT` do nowej domeny `PROJECT_MANAGED`.
+
+---
+
+## 6. Execution — Linear i handoff
+
+Authoritative owner dla backlogu, tasks i implementation work **Labu** jest Linear.
 
 Po handoffie do regularnej realizacji w OTECH wykonanie przestaje być current execution state Labu. Wtedy przejdź do domeny `OTECH` i zastosuj jej lokalny kontrakt/runtime.
 
 ---
 
-## 6. Repo-native work — GitHub
+## 7. Repo-native work — GitHub
 
-GitHub `kriswpl/zhc-lab-otech` jest authoritative write ownerem dla:
+GitHub `kriswpl/zhc-lab-otech` jest authoritative write ownerem wyłącznie dla:
+- source code,
+- infra,
+- deployment,
+- workflowów związanych z kodem/execution,
+- repo-native configuration.
 
-- `PROJECT_INDEX.md`,
-- `config/project.sources.yaml`,
-- workflowów,
-- skryptów synchronizacji,
-- repo-native configuration i kodu.
+Project knowledge, project state i `PROJECT_INDEX.md` nie są mirrorowane do GitHuba.
 
-`docs/` i `state/` w repozytorium są generowanymi/versioned projekcjami upstream Notion. Nie edytuj ich jako sposobu semantic write.
+Dawny Notion -> GitHub -> Drive context sync jest wyłączony. Nie ma aktywnej domyślnej materializacji Google Docs/Sheets do `.md` / `.csv` / `.ndjson`.
 
 ---
 
-## 7. Routing według zadania
+## 8. Routing według zadania
 
-### Current opportunity portfolio state
-
-`PROJECT_INDEX.md -> Drive state/ -> tylko potrzebny plik`
+### Current opportunity / runtime state
+`PROJECT_INDEX.md -> 10 - Project State/Project State -> tylko potrzebna zakładka / rekord -> opcjonalnie detail_doc`
 
 ### Trwała wiedza Labu
+`PROJECT_INDEX.md -> 20 - Knowledge -> tylko potrzebny dokument`
 
-`PROJECT_INDEX.md -> Drive docs/ -> tylko potrzebny dokument`
-
-### Trwały semantic write do knowledge/state
-
-`PROJECT_INDEX.md -> Notion ZHC Lab OTECH -> istniejący managed object -> bounded mutation`
+### Research / brain dump
+`PROJECT_INDEX.md -> 30 - Research -> tylko potrzebne źródło`
 
 ### Execution / backlog / task status Labu
-
 `PROJECT_INDEX.md -> Linear`
 
 ### Bieżący governance / reporting / financing / operational state spółki OTECH
-
 `PROJECT_INDEX.md -> handoff do DOMAIN_KEY=OTECH -> lokalny entrypoint domeny OTECH`
 
-Nie wyciągaj company-level current state OTECH z tego Labu.
-
-### Kod / config / workflow / synchronizacja / PROJECT_INDEX
-
+### Kod / infra / deployment / repo-native config
 `PROJECT_INDEX.md -> GitHub kriswpl/zhc-lab-otech`
 
-### Shared metoda Opportunity / Five Lenses / portfolio / evidence oraz source contract
+### WPT execution
+`PROJECT_INDEX.md -> ZHC_RUNTIME_INDEX -> ZHC_RUNTIME_FLAT/<WPT_ID>.md -> tylko wymagane local inputs/state -> wykonanie -> walidacja -> authoritative local write`
 
-`PROJECT_INDEX.md -> ZHC Product Base FLAT -> _ROOT.md -> właściwy dokument`
-
-Dla project source/read/write/mutation rules:
-
-`ZHC Product Base FLAT -> ZHC OS Engineering.md -> Project Source / Access / Mutation Contract`
-
-Nie preloaduj wszystkich źródeł.
+Minimalny normalny prompt może zawierać tylko wskazanie wejścia, jeśli nie da się go jednoznacznie rozwiązać lokalnie, oraz polecenie wykonania konkretnego `WPT_ID`.
 
 ---
 
-## 8. Sync, freshness i conflicts
+## 9. Freshness, conflicts i source precedence
 
-- Notion -> GitHub/Drive dla project knowledge/state może mieć krótkie opóźnienie synchronizacji.
-- Właśnie wykonany successful write do Notion nie może zostać cofnięty tylko dlatego, że Drive/GitHub pokazuje jeszcze starszą projekcję.
-- Brakująca lub pusta projekcja jest ograniczeniem do zgłoszenia, nie pozwoleniem na rekonstrukcję current state z pamięci.
-- Lab-specific opportunity state ma pierwszeństwo przed shared ZHC operating knowledge przy opisywaniu bieżącego stanu ZHC Lab OTECH.
+- Drive jest canonical bezpośrednio dla project knowledge/state.
+- Successful write do canonical Drive source jest current truth dla swojej klasy informacji.
+- Notion po cutoverze jest historycznym migration source, nie current fallbackiem.
+- GitHub nie jest projekcją knowledge/state.
+- `90 - Archive` nie jest current fallbackiem.
 - Domena `OTECH` ma pierwszeństwo przy claimach o bieżącym governance i operational state spółki.
-- Po `SPIN_OUT` child domain jest authoritative dla nowego current product/project state; Lab zachowuje tylko lineage i własny portfolio trail.
-- Konflikty rozwiązuj według klasy informacji i authoritative write ownera z sekcji 1 oraz shared ZHC contractu.
-
----
-
-## 9. Runtime adapters
-
-Adapter lub connector określa **jak** uzyskać dostęp do źródła, a nie **które źródło jest authoritative**.
-
-Jeżeli wymagany source nie jest dostępny w danym runtime:
-
-- nie zastępuj go innym source plane tylko dlatego, że jest dostępny,
-- nie zapisuj semantic change do projekcji,
-- wskaż brak dostępu lub pozostaw zmianę staged do wykonania przez właściwy write plane.
-
-Nie zakładaj istnienia ZHC Skill, dopóki nie zostanie faktycznie wdrożony i jawnie wskazany jako aktywny runtime adapter.
+- Dla WPT objętych `ZHC_RUNTIME_SCOPE` pierwszeństwo jako execution contract ma przypięty `ZHC_RUNTIME_INDEX` + dokładny FLAT WPT.
 
 ---
 
 ## 10. Local overrides
 
-`LOCAL_OVERRIDES: none`
+`LOCAL_OVERRIDES:`
 
-Granica między `ZHC_LAB_OTECH` a `OTECH` jest lokalną regułą ownership/handoff, a nie odstępstwem od shared `Project Source / Access / Mutation Contract`.
+- `WPT_EXECUTION = PINNED_ZHC_RUNTIME_INDEX`
+- `ZHC_RUNTIME_INDEX = https://drive.google.com/file/d/16svi9QiFyzNrMO41ooV3iG-eYUv20vuf/view`
+- `ZHC_RUNTIME_FLAT = https://drive.google.com/drive/folders/1oFP2uvbC-pOYY7khdi6vzS7RPq8yXpBn`
+- `ZHC_RUNTIME_SOURCE_COMMIT = 2ba4e2f59b4a428e48f60d95e0d797451f4e2e19`
+- `ZHC_RUNTIME_SCOPE = PP-00-G01;PP-00-E03;PP-00-E01;PP-00-E02;PP-00-J01;PP-01-E01`
+- `RUNTIME_PROGRESSIVE_LOADING = ONE_WPT_AT_A_TIME`
+- `USER_PROMPT_CONTRACT = BUSINESS_INPUT_PLUS_WPT_ONLY`
+- `EXECUTABLE_CURRENT_EXCLUDED_FROM_NORMAL_PROJECT_ROUTING = true`
+- `ZHC_RUNTIME_SKILL_REQUIRED = false`
+- `ZHC_RUNTIME_RELEASE = zhc-runtime-v0.0.3-pp01e01.4`
+- `HUMAN_REVIEW_PROJECTION = REQUIRED_BEFORE_CANONICAL_APPROVAL`
+- `HUMAN_REVIEW_PROJECTION_ADAPTER = GOOGLE_DOC_NATIVE_TABS`
+- `HUMAN_REVIEW_PROJECTION_TARGET = SAME_LOCAL_STAGING_PLANE_AS_STAGED_PACKAGE`
+- `HUMAN_REVIEW_PROJECTION_SOURCE_OF_TRUTH = false`
+- `APPROVAL_PACKAGE = WHOLE_VALIDATED_PACKAGE`
+- `STAGED_PROPOSAL_LEDGER = APPEND_ONLY`
+- `DETAIL_DOC_POINTER = RESOLVABLE`
+- `CANONICAL_HUMAN_PROJECTION = REQUIRED_AFTER_APPROVED_COMMIT_WHEN_DECLARED`
+- `CANONICAL_HUMAN_PROJECTION_SOURCE_OF_TRUTH = false`
 
 ---
 
-## 11. Minimal repository / mirror structure
+## 11. Cutover history
 
-```text
-ZHC Lab OTECH/
-├── PROJECT_INDEX.md
-├── config/
-│   └── project.sources.yaml
-├── scripts/
-│   ├── sync-project-context.py
-│   └── publish-project-context-to-drive.sh
-├── .github/
-│   └── workflows/
-│       └── sync-project-context.yml
-├── docs/                  # generated from Notion
-│   └── lab-constitution.md
-└── state/                 # generated from Notion
-    ├── signals.csv
-    ├── opportunities.csv
-    ├── hypotheses.csv
-    ├── experiments.csv
-    ├── evidence.csv
-    ├── decisions.csv
-    └── operational-state.md
-```
+Cutover do Drive-native source architecture wykonano 2026-09-23.
 
-`PROJECT_INDEX.md` jest routerem. Semantic structures powstają w Notion. `docs/` i `state/` w GitHub oraz cały read mirror na Drive powstają przez workflow synchronizacji, nie przez ręczne edycje.
+Zmiany:
+- istniejący folder ZHC Lab OTECH pozostał canonical `PROJECT_ROOT`,
+- `PROJECT_INDEX.md` zachowuje ten sam Drive file ID i staje się canonical local contract,
+- Notion-generated `docs/` i `state/` zostały zachowane w `90 - Archive/Pre-Drive-native cutover - 2026-09-23`,
+- canonical state został przeniesiony do Google Sheet `10 - Project State/Project State`,
+- durable `Konstytucja Labu` została przeniesiona do Google Docs w `20 - Knowledge`,
+- ZHC runtime `.4` został przypięty jako lokalny execution contract dla aktywnego scope,
+- Notion -> GitHub -> Drive sync został wyłączony,
+- GitHub pozostaje repo-native plane dla code/execution,
+- Notion pozostaje historycznym migration source i nie jest current fallbackiem.
